@@ -1,9 +1,10 @@
 import 'package:http/http.dart';
 
-//6554a27063cafc694fe6bbeb.mockapi.io/art
-class NetworkServices {
-  static const String baseUrl = "6554a27063cafc694fe6bbeb.mockapi.io";
-  static const String apiProduct = "/art";
+
+class NetWorkService {
+  static String baseUrl = "65606ee083aba11d99d0cb16.mockapi.io";
+
+  static String apiProdeuct = "/person";
 
   static Future<String> getData(String api) async {
     Uri uri = Uri.https(baseUrl, api);
