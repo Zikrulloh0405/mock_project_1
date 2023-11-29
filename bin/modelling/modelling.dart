@@ -1,74 +1,82 @@
-import 'dart:convert';
-
-List<Person> fromJsonToObject(String data) =>
-    List<Person>.from(jsonDecode(data).map((e) => Person.fromJson(e)));
-
-String fromObjectToJson(Person person) => jsonEncode(person.toJson());
-
-class Person {
-  late String name;
-  late int age;
-  late bool isStudent;
-  late List<int> grades;
-  late Adress address;
-
-  Person(
-      {required this.name,
-      required this.age,
-      required this.isStudent,
-      required this.grades,
-      required this.address});
-
-  Person.fromJson(Map<String, dynamic> json) {
-    name = json["name"];
-    age = json["age"];
-    isStudent = json["isStudent"];
-    grades = List<int>.from(json["grades"].map((e) => e));
-    address = Adress.fromJson(json["address"]);
+class Food {
+  late String dishName;
+  late List<Ingredient> ingredients;
+  late NutritionalInformation nutritionalInformation;
+  late List<String> preparationSteps;
+  Food({
+    required this.dishName,
+    required this.ingredients,
+    required this.nutritionalInformation,
+    required this.preparationSteps,
+  });
+  Food.fromJson(Map<String, dynamic> json) {
+    dishName = json["dish_name"];
+    ingredients = List<Ingredient>.from(
+        json["ingredients"].map((x) => Ingredient.fromJson(x)));
+    nutritionalInformation =
+        NutritionalInformation.fromJson(json["nutritional_information"]);
+    preparationSteps =
+        List<String>.from(json["preparation_steps"].map((x) => x));
   }
-
-  Map<String, dynamic> toJson() {
-    return {
-      "name": name,
-      "age": age,
-      "isStudent": isStudent,
-      "grades": grades,
-      "address": address
-    };
-  }
-
-  String talabami(bool talabe) => (talabe == true) ? 'Student' : 'Not Strudent';
-
-  @override
-  String toString() {
-    return """
-Name : $name
-Age : $age
-Status : ${talabami(isStudent)}
-Grades : $grades
-Adress : $address
-""";
-  }
+  Map<String, dynamic> toJson() => {
+        "dish_name": dishName,
+        "ingredients": List<dynamic>.from(ingredients.map((x) => x.toJson())),
+        "nutritional_information": nutritionalInformation.toJson(),
+        "preparation_steps": List<dynamic>.from(preparationSteps.map((x) => x)),
+      };
 }
 
-class Adress {
-  late String city;
-  late String zipCode;
+class Ingredient {
+  late String name;
+  late String quantity;
+  String? unit;
+  Ingredient({
+    required this.name,
+    required this.quantity,
+    this.unit,
+  });
 
-  Adress.fromJson(Map<String, dynamic> json) {
-    city = json["city"];
-    zipCode = json["zipCode"];
+  Ingredient.fromJson(Map<String, dynamic> json) {
+    name = json["name"];
+    quantity = json["quantity"];
+    unit = json["unit"];
   }
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "quantity": quantity,
+        "unit": unit,
+      };
+}
 
-  Map<String, dynamic> toJSon() {
-    return {"city": city, "zipCode": zipCode};
+class NutritionalInformation {
+  late int calories;
+  late String carbohydrates;
+  late String protein;
+  late String fat;
+  late String fiber;
+  late String sugar;
+  NutritionalInformation({
+    required this.calories,
+    required this.carbohydrates,
+    required this.protein,
+    required this.fat,
+    required this.fiber,
+    required this.sugar,
+  });
+  NutritionalInformation.fromJson(Map<String, dynamic> json) {
+    calories = json["calories"];
+    carbohydrates = json["carbohydrates"];
+    protein = json["protein"];
+    fat = json["fat"];
+    fiber = json["fiber"];
+    sugar = json["sugar"];
   }
-
-  @override
-  String toString() {
-    return """
-City : $city
-Zip Code : $zipCode
-""";
-  }
+  Map<String, dynamic> toJson() => {
+        "calories": calories,
+        "carbohydrates": carbohydrates,
+        "protein": protein,
+        "fat": fat,
+        "fiber": fiber,
+        "sugar": sugar,
+      };
 }
